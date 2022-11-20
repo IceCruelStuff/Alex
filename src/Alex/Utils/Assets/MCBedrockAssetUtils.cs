@@ -72,7 +72,7 @@ namespace Alex.Utils.Assets
 					var versionRequest = httpClient.Send(new HttpRequestMessage(HttpMethod.Get, VersionURL), HttpCompletionOption.ResponseContentRead);
 					var versionStream = versionRequest.Content.ReadAsStreamAsync().Result;
 
-					var latestVersion = JsonSerializer.Deserialize<T>(versionStream)["latest"]["version"];
+					var latestVersion = JsonSerializer.Deserialize(versionStream)["latest"]["version"];
 
 					if (latestVersion != currentVersion)
 					{
@@ -88,7 +88,7 @@ namespace Alex.Utils.Assets
 						{
 							string archivePath = string.Empty;
 							
-							var downloadTask = c.DownloadDataAsync(DownloadURL, (p) =>
+							var downloadTask = c.DownloadDataAsync(new Uri(DownloadURL), (p) =>
 							{
 								var downloadSpeed =
 									$"Download speed: {FormattingUtils.GetBytesReadable((long)(Convert.ToDouble(p.BytesReceived) / sw.Elapsed.TotalSeconds), 2)}/s";
