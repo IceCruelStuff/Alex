@@ -419,7 +419,7 @@ namespace Alex
 				{
 					using (ZipArchive zipArchive = new ZipArchive(Storage.OpenFileStream(bedrockPath, FileMode.Open)))
 					{
-						zipArchive.GetEntry("resource_pack").ExtractToFile(di.FullName, true);
+						zipArchive.GetEntry("resource_pack").ExtractToFile(di.FullName);
 					}
 
 					Storage.Delete(bedrockPath);
