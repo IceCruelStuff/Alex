@@ -419,7 +419,7 @@ namespace Alex
 				{
 					using (ZipArchive zipArchive = new ZipArchive(Storage.OpenFileStream(bedrockPath, FileMode.Open)))
 					{
-						var root = "resource_pack";
+						var root = "bedrock-samples-main/resource_pack";
 						var resourcePackFiles = from currentEntry in zipArchive.Entries
 												where currentEntry.FullName.StartsWith($"{root}/")
 												where !String.IsNullOrWhiteSpace(currentEntry.Name)
