@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Json;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -21,9 +20,6 @@ namespace Alex.Utils.Assets
 		private const string VersionURL = "https://raw.githubusercontent.com/Mojang/bedrock-samples/main/version.json";
 		private const string DownloadURL = "https://codeload.github.com/Mojang/bedrock-samples/zip/refs/heads/main";
 		private static readonly string CurrentBedrockVersionStorageKey = Path.Combine("assets", "bedrock-version.txt");
-
-		private static readonly Regex ExtractVersionFromFilename = new Regex(
-			@"Vanilla_.*Pack_(?<version>[\d\.]+).zip", RegexOptions.Compiled);
 
 		private IStorageSystem Storage { get; }
 
@@ -73,7 +69,7 @@ namespace Alex.Utils.Assets
 					var versionRequest = httpClient.Send(new HttpRequestMessage(HttpMethod.Get, VersionURL), HttpCompletionOption.ResponseContentRead);
 					var versionStream = versionRequest.Content.ReadAsStreamAsync().Result;
 
-					var latestVersion = JsonSerializer.Deserialize<JsonObject>(versionStream)["latest"]["version"];
+					var latestVersion = JsonSerializer.Deserialize<Dictionary<string, object>>(versionStream)["latest"]["version"];
 
 					if (latestVersion != currentVersion)
 					{
