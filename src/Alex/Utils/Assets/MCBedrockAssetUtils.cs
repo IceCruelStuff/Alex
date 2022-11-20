@@ -70,7 +70,7 @@ namespace Alex.Utils.Assets
 					var versionRequest = httpClient.Send(new HttpRequestMessage(HttpMethod.Get, VersionURL), HttpCompletionOption.ResponseContentRead);
 					var versionStream = versionRequest.Content.ReadAsStreamAsync().Result;
 
-					var latestVersion = JsonSerializer.Deserialize<Dictionary<string, object>>(versionStream)["latest"]["version"];
+					var latestVersion = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(versionStream)["latest"]["version"];
 
 					if (latestVersion != currentVersion)
 					{
